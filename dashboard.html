@@ -1,0 +1,148 @@
+
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta http-equiv="refresh" content="900">
+<title>Wake Dashboard</title>
+<style>
+:root {
+  --bg: #0b1220; --card: #131c2e; --line: #1f2a44;
+  --muted: #7c8aa8; --text: #e6ecf5;
+  --good: #16a34a; --warn: #f59e0b; --bad: #dc2626; --neutral: #475569;
+  --accent: #60a5fa;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  height: 100%; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.wrap { padding: 20px; height: 100vh; display: grid;
+  grid-template-rows: auto auto 1fr auto; gap: 14px; }
+.hdr { display: flex; justify-content: space-between; align-items: baseline; }
+.hdr h1 { font-size: 28px; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+.hdr .sub { color: var(--muted); font-size: 14px; }
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.metric { background: var(--card); border-radius: 16px; padding: 18px 20px;
+  border-left: 4px solid var(--neutral); }
+.metric.good { border-left-color: var(--good); }
+.metric.warn { border-left-color: var(--warn); }
+.metric.bad  { border-left-color: var(--bad); }
+.metric .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted); margin-bottom: 8px; }
+.metric .val { font-size: 44px; font-weight: 600; line-height: 1;
+  letter-spacing: -0.02em; }
+.metric .unit { font-size: 14px; color: var(--muted); margin-left: 4px;
+  font-weight: 400; }
+.metric .sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; min-height: 0; }
+.card { background: var(--card); border-radius: 16px; padding: 20px 22px;
+  overflow: auto; }
+.card h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent); margin: 0 0 10px; font-weight: 600; }
+.card .session { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+.card .intent { color: var(--muted); font-size: 14px; line-height: 1.4; }
+.card pre { background: #0b1325; border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; margin: 0; white-space: pre-wrap;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px; line-height: 1.5; color: var(--text); }
+.foot { display: flex; gap: 10px; justify-content: space-between; align-items: center;
+  color: var(--muted); font-size: 12px; }
+.btn { background: var(--accent); color: #0b1220; border: 0; border-radius: 10px;
+  padding: 12px 20px; font-size: 14px; font-weight: 600; cursor: pointer;
+  text-decoration: none; font-family: inherit; }
+.btn.outline { background: transparent; color: var(--accent);
+  border: 1px solid var(--accent); }
+.copy { float: right; }
+.tag { display: inline-block; padding: 3px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 600; background: var(--line); color: var(--muted); }
+.tag.ok { background: #062e1a; color: var(--good); }
+</style></head><body>
+<div class="wrap">
+  <div class="hdr">
+    <div>
+      <h1>Good evening</h1>
+      <div class="sub">Tuesday June 16 · 15.7 weeks to 2026-10-04 · goal 5:30</div>
+    </div>
+    <div>
+      <span class="tag">no check-in</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric neutral">
+      <div class="lbl">Sleep</div>
+      <div class="val">—</div>
+      <div class="sub">no data</div>
+    </div>
+    <div class="metric neutral">
+      <div class="lbl">HRV</div>
+      <div class="val">—</div>
+      <div class="sub">
+        no baseline
+      </div>
+    </div>
+    <div class="metric neutral">
+      <div class="lbl">RHR</div>
+      <div class="val">—</div>
+      <div class="sub">
+        no baseline
+      </div>
+    </div>
+    <div class="metric good">
+      <div class="lbl">TSB · Form</div>
+      <div class="val">+1</div>
+      <div class="sub">CTL 16 · ATL 15 · neutral / productive training zone</div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="card">
+      <h2>Today's session</h2>
+      <div class="session">Type: WORKOUT — SWIM — 45 minutes</div>
+      <div class="intent">To improve swim technique and build foundational aerobic capacity in the weakest discipline while adhering to a polarized intensity distribution.</div>
+    </div>
+    <div class="card">
+      <h2>Intervals.icu
+        
+        <button class="btn outline copy" onclick="copyBlock()">Copy</button>
+        
+      </h2>
+      
+      <pre id="iv">- Warmup 10m Z1 Pace
+- 4x
+- 25mtr Sculling drill
+- 15s
+
+- Main set 4x
+- 50mtr Single-arm drill
+- 15s
+
+- Main set 4x
+- 100mtr Z2 Pace
+- 20s
+
+- Main set 4x
+- 50mtr 6-kick switch drill
+- 15s
+
+- Main set 4x
+- 100mtr Z2 Pace
+- 20s
+
+- Main set 200mtr Pull buoy Z2 Pace
+
+- Cooldown 5m Z1 Pace</pre>
+      
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>auto-refresh 15 min</div>
+    
+  </div>
+</div>
+<script>
+function copyBlock() {
+  const t = document.getElementById('iv').innerText;
+  navigator.clipboard.writeText(t);
+}
+</script>
+</body></html>

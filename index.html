@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Triathlon Wake</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    background-color: #0b1220; overflow: hidden;
+  }
+  #bg {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #0b1220;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+  }
+  #err {
+    position: absolute; left: 0; right: 0; bottom: 8px;
+    text-align: center; color: #7c8aa8;
+    font-family: sans-serif; font-size: 12px; display: none;
+  }
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="err">offline — retrying…</div>
+<script>
+  var IMG = "wake.png";
+  var REFRESH_MS = 900000;
+  var RELOAD_MS = 10800000;
+
+  function show() {
+    var t = new Date().getTime();
+    var url = IMG + "?t=" + t;
+    var probe = new Image();
+    probe.onload = function () {
+      document.getElementById("bg").style.backgroundImage = "url('" + url + "')";
+      document.getElementById("err").style.display = "none";
+    };
+    probe.onerror = function () {
+      document.getElementById("err").style.display = "block";
+    };
+    probe.src = url;
+  }
+
+  show();
+  setInterval(show, REFRESH_MS);
+  // Tap anywhere to refresh immediately.
+  document.body.onclick = show;
+  // Safety net: full page reload occasionally in case index.html itself changed.
+  setTimeout(function () { window.location.reload(true); }, RELOAD_MS);
+</script>
+</body>
+</html>
